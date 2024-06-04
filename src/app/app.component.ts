@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {CommonModule} from "@angular/common";
-import {TemperatureComponentComponent} from "./temperature/temperature-component/temperature-component.component";
+import {TemperatureComponentComponent} from "./dataComponents/temperature-component/temperature-component.component";
 
 @Component({
   selector: 'app-root',
