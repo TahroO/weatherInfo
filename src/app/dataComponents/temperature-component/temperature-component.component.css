@@ -1,0 +1,12 @@
+.tempButton {
+  background: aqua;
+  border-style: solid;
+  border-color: black;
+}
+
+.temperatureResult {
+  background: chartreuse;
+  font-size: 2em;
+  font-family: "Droid Sans Mono";
+}
+

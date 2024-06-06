@@ -1,6 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {ApiServiceComponent} from "../../services/api-service/api-service.component";
+import {DataHandlerHelper} from "../../services/data-handler/dataHandlerHelper";
 
 @Component({
   selector: 'app-temperature-component',
@@ -13,6 +14,7 @@ import {ApiServiceComponent} from "../../services/api-service/api-service.compon
 })
 export class TemperatureComponentComponent {
   private apiService: ApiServiceComponent;
+
   // degrees: string = "";
 
   constructor() {
@@ -44,7 +46,7 @@ export class TemperatureComponentComponent {
   }
 
   onClick() {
-    this.makeFetchRequest();
+    // this.makeFetchRequest();
     // this.degrees = this.apiService.getTemperatureData();
     this.apiService.getMetaData();
     console.log("Hello!");

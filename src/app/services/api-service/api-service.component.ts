@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {DataHandlerHelper} from "../data-handler/dataHandlerHelper";
 
 @Component({
   selector: 'app-api-service',
@@ -8,8 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './api-service.component.css'
 })
 export class ApiServiceComponent {
+  private dataHandlerHelper: DataHandlerHelper;
 
   constructor() {
+    this.dataHandlerHelper = new DataHandlerHelper;
   }
 
   apiUrl:string = "https://dataset.api.hub.geosphere.at/v1/station/current/tawes-v1-10min?parameters=TL&station_ids=11035";
