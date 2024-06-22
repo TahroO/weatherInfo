@@ -1,28 +1,32 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, Input, input} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {ApiServiceComponent} from "../../services/api-service/api-service.component";
+import { Output, EventEmitter } from '@angular/core';
 import {DataHandlerHelper} from "../../services/data-handler/dataHandlerHelper";
 
 @Component({
   selector: 'app-temperature-component',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    ApiServiceComponent
   ],
   templateUrl: './temperature-component.component.html',
   styleUrl: './temperature-component.component.css'
 })
 export class TemperatureComponentComponent {
-  private apiService: ApiServiceComponent;
 
-  // degrees: string = "";
+  protected apiServiceComponent: ApiServiceComponent;
+  protected degrees: string = "";
+
+  @Output() newItemEvent = new EventEmitter<string>();
 
   constructor() {
-    this.apiService = new ApiServiceComponent;
+    this.apiServiceComponent = new ApiServiceComponent();
   }
 
   apiUrlGrazAirport: string = "https://dataset.api.hub.geosphere.at/v1/station/current/tawes-v1-10min?parameters=TL&station_ids=11240";
-  degrees = "";
+
   makeFetchRequest() {
     fetch(this.apiUrlGrazAirport)
       .then(response => {
@@ -45,11 +49,15 @@ export class TemperatureComponentComponent {
       })
   }
 
-  onClick() {
-    // this.makeFetchRequest();
-    // this.degrees = this.apiService.getTemperatureData();
-    this.apiService.getMetaData();
-    console.log("Hello!");
+  addNewItem(value: string) {
+    this.newItemEvent.emit(value);
+  }
+
+  getTemperature(): string {
+    this.makeFetchRequest();
+
+    console.log("TemperatureCall works!");
+    return this.degrees;
   }
 }
 
