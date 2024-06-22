@@ -16,7 +16,7 @@ import {ApiServiceComponent} from "../../services/api-service/api-service.compon
   templateUrl: './interface-view.component.html',
   styleUrl: './interface-view.component.css'
 })
-export class InterfaceViewComponent {
+export class InterfaceViewComponent{
 
   private temperatureComponent: TemperatureComponentComponent;
 
