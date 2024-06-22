@@ -1,13 +1,27 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {DataHandlerHelper} from "../data-handler/dataHandlerHelper";
+// import {writeFileSync} from "node:fs";
+import {FormsModule} from "@angular/forms";
+
+
+enum ResponseType{
+  "TEXT" = 0,
+  "JSON" = 1,
+  "DEFAULT" = 2,
+
+}
 
 @Component({
   selector: 'app-api-service',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule
+  ],
   templateUrl: './api-service.component.html',
   styleUrl: './api-service.component.css'
 })
+
+
 export class ApiServiceComponent {
   private dataHandlerHelper: DataHandlerHelper;
 
@@ -18,7 +32,7 @@ export class ApiServiceComponent {
   apiUrl:string = "https://dataset.api.hub.geosphere.at/v1/station/current/tawes-v1-10min?parameters=TL&station_ids=11035";
   apiUrlGrazAirport: string = "https://dataset.api.hub.geosphere.at/v1/station/current/tawes-v1-10min?parameters=TL&station_ids=11240";
 
-  makeFetchRequest(url: string) {
+  makeFetchRequest(url: string, type: ResponseType): string | JSON {
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -28,19 +42,37 @@ export class ApiServiceComponent {
       })
       .then(data => {
         const dataSet = data;
+        const jsonString = JSON.stringify(dataSet);
+        const jsonObject: JSON = dataSet;
         console.log(dataSet);
-        return dataSet;
+        switch (type) {
+          case ResponseType.TEXT :
+            return jsonString;
+          case ResponseType.JSON :
+            return jsonObject;
+          default:
+            return dataSet;
+        }
+        // return dataSet;
       })
       .catch(error => {
         console.error('error:', error);
-      });
+      })
+    return "No matching Response";
   }
 
-  getMetaData() {
-    const apiUrlMetaData: string = "https://dataset.api.hub.geosphere.at/v1/station/current/tawes-v1-10min/metadata";
-    this.makeFetchRequest(apiUrlMetaData);
-    console.log("MetaDataWorks!")
-  }
+
+
+  // jsonToFile(obj : JSON | string, filename : string){
+  //   writeFileSync(`${filename}.json`, JSON.stringify(obj, null, 2));
+  // }
+  //
+  // getMetaData() {
+  //   const apiUrlMetaData: string = "https://dataset.api.hub.geosphere.at/v1/station/current/tawes-v1-10min/metadata";
+  //   const response = this.makeFetchRequest(apiUrlMetaData, ResponseType.JSON);
+  //   console.log("MetaDataWorks!")
+  //   return this.jsonToFile(response, "weatherData")
+  // }
 
   // getTemperatureData(): string {
   //   let degrees = "";

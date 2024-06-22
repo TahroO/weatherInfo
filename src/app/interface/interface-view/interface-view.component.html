@@ -1,7 +1,10 @@
 <ng-container>
-  <div class="temperatureElement">
-<app-temperature-component></app-temperature-component>
-  </div>
+    <button class="tempButton"name="Push" (click)="onClick()">Press me!</button>
 
-<p>interface-view works!</p>
+  <div class="temperatureElement">
+    <app-temperature-component>
+    </app-temperature-component>
+
+  </div>
+  <p>interface-view works!</p>
 </ng-container>
