@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {
   TemperatureComponentComponent
 } from "../../dataComponents/temperature-component/temperature-component.component";
 import {FormsModule} from "@angular/forms";
 import {ApiServiceComponent} from "../../services/api-service/api-service.component";
+import {DataService} from "../../services/DataService";
 
 @Component({
   selector: 'app-interface-view',
@@ -16,13 +17,12 @@ import {ApiServiceComponent} from "../../services/api-service/api-service.compon
   templateUrl: './interface-view.component.html',
   styleUrl: './interface-view.component.css'
 })
-export class InterfaceViewComponent{
+export class InterfaceViewComponent {
 
   private temperatureComponent: TemperatureComponentComponent;
 
-  constructor() {
-
-    this.temperatureComponent = new TemperatureComponentComponent;
+  constructor(private dataService: DataService) {
+    this.temperatureComponent = new TemperatureComponentComponent(dataService);
   }
 
   onClick() {
@@ -35,8 +35,8 @@ export class InterfaceViewComponent{
 
   }
 
-  showMetaData() {
-
-  }
+  // showMetaData() {
+  //
+  // }
 
 }

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {DataHandlerHelper} from "../data-handler/dataHandlerHelper";
-// import {writeFileSync} from "node:fs";
 import {FormsModule} from "@angular/forms";
 
 
