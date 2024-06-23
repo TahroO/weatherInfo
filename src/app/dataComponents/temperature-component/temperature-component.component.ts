@@ -1,8 +1,7 @@
-import {Component, inject, Input, input} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {ApiServiceComponent} from "../../services/api-service/api-service.component";
-import { Output, EventEmitter } from '@angular/core';
-import {DataHandlerHelper} from "../../services/data-handler/dataHandlerHelper";
+import {DataService} from "../../services/DataService";
 
 @Component({
   selector: 'app-temperature-component',
@@ -14,14 +13,14 @@ import {DataHandlerHelper} from "../../services/data-handler/dataHandlerHelper";
   templateUrl: './temperature-component.component.html',
   styleUrl: './temperature-component.component.css'
 })
-export class TemperatureComponentComponent {
+export class TemperatureComponentComponent implements OnInit{
 
   protected apiServiceComponent: ApiServiceComponent;
   protected degrees: string = "";
 
-  @Output() newItemEvent = new EventEmitter<string>();
+  // @Output() newItemEvent = new EventEmitter<string>();
 
-  constructor() {
+  constructor(private data_service: DataService) {
     this.apiServiceComponent = new ApiServiceComponent();
   }
 
@@ -49,9 +48,25 @@ export class TemperatureComponentComponent {
       })
   }
 
-  addNewItem(value: string) {
-    this.newItemEvent.emit(value);
+  data: JSON[] = [];
+  errorMessage!: string;
+
+
+  ngOnInit() {
+    this.data_service.getData(this.apiUrlGrazAirport).subscribe({
+      next: (data) => {
+        this.data = data;
+        console.log(this.data);
+      },
+      error: (error) => {
+        this.errorMessage = error;
+      },
+    });
   }
+
+  // addNewItem(value: string) {
+  //   this.newItemEvent.emit(value);
+  // }
 
   getTemperature(): string {
     this.makeFetchRequest();
